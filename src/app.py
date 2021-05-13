@@ -5,9 +5,11 @@ from flask import Flask
 from flask import request, Response
 import json
 
-# imports de modulos criados
+# imports de modulos blueprint criados
+from .user.app import user_routes
 
-# para dar um prefixo a api
+
+# para dar um prefixo a api ele nao necessariamente é obrigatorio caso nao queira apenas remova a classe e comando de prefixo
 class PrefixMiddleware(object):
     def __init__(self, app, prefix=''):
         self.app = app
@@ -19,20 +21,22 @@ class PrefixMiddleware(object):
             return self.app(environ, start_response)
         else:
             start_response('404', [('Content-Type', 'text/plain')])
-            return ['Essa url nao pode ser utizada'.encode()]
+            return ['Essa url nao pode ser utizada acrescente o prefixo /api/'.encode()]
 
 app = Flask(__name__)
 CORS(app=app)
 
-app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix='/user') # < seu prefixo aqui
-
-# adicionar blueprints aqui
-
+app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix='/api') # < seu prefixo aqui
 
 # rota basica
 @app.route('/', methods=['GET'])
 def initial_route():
     return json.dumps({"server": "online"}, separators=(",", ":")).encode("utf-8")
+
+# adicionar blueprints aqui
+app.register_blueprint(user_routes, url_prefix='/user')
+
+
 
 
 if __name__ == "__main__":
