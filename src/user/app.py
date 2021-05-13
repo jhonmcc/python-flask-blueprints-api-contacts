@@ -11,5 +11,4 @@ user_routes = Blueprint('user_routes', __name__)
 @user_routes.route('/', methods=['GET'])
 def index_user():
     print('path user index acionada', flush=True)
-    # Response({"path": "user"}, status=200)
-    return json.dumps({"user": "index"}, separators=(",", ":")).encode("utf-8")
+    return json.dumps({"route": "user index"}, separators=(",", ":")).encode("utf-8")
