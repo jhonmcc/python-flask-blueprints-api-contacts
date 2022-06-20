@@ -1,3 +1,4 @@
+from distutils.log import INFO
 import sys, os; sys.path.insert(0,os.path.dirname(os.path.dirname(__file__))) # esse comando vai te ajudar a fazer os import's de outras pastas
 
 import json
@@ -8,6 +9,7 @@ from waitress import serve
 from flask import Flask
 from flask import request, Response
 
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 # imports de modulos blueprint criados
 # from src.user.app import user_routes
 
@@ -36,14 +38,15 @@ app = Flask(__name__)
 # rota basica
 @app.route('/', methods=['GET'])
 def initial_route():
+    logging.info('route index')
     return 'api index route'
     # return json.dumps({"server": "online"}, separators=(",", ":")).encode("utf-8")
 
 
 if __name__ == "__main__":
     try:
-        port = int(os.environ.get('$PORT', 8080))
-        serve(app, host='0.0.0.0', port=8080)
+        port = int(os.environ.get('$PORT', 5000))
+        serve(app, host='0.0.0.0', port=port)
     except Exception as e:
         logging.error('Erro iniciando o servidor - ' + str(e))
         os._exit(0)
