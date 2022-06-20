@@ -16,6 +16,8 @@ pip freeze > arquivoNome.txt
 pip install -r arquivoNome.txt
 * para instalar o arquivo de depencias de pacotes
 
+criar api com hapi
+criar api com mongo
+criar api com token
 
-
-
+github.com/hmchreiner/node-hapijs

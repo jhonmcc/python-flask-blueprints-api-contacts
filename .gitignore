@@ -1,3 +1,4 @@
 /flask-env
 /src/__pycache__
 /src/user/__pycache__
+.vscode
